@@ -1,0 +1,303 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Happy Birthday & Happy Friendship Day!</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Pacifico&family=Inter:wght@400;600;700&family=Playfair+Display:wght@400;700&display=swap" rel="stylesheet">
+    <style>
+        /* Custom fonts */
+        .font-pacifico {
+            font-family: 'Pacifico', cursive;
+        }
+        .font-playfair {
+            font-family: 'Playfair Display', serif;
+        }
+        /* Base body styles */
+        body {
+            font-family: 'Inter', sans-serif;
+            background: linear-gradient(135deg, #fdf2f8, #fce7f3); /* Soft pink gradient */
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            text-align: center;
+            overflow: hidden; /* Hide overflow for stickers and confetti */
+            position: relative;
+        }
+        /* Watermark style */
+        .watermark {
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%) rotate(-20deg);
+            font-size: 12vw; /* Responsive font size */
+            font-weight: 900;
+            color: rgba(236, 72, 153, 0.08); /* Very faint pink */
+            z-index: 0;
+            pointer-events: none; /* Allows clicking through the watermark */
+            user-select: none;
+            font-family: 'Pacifico', cursive;
+        }
+        /* Card container for all pages */
+        .card {
+            background-color: white;
+            padding: 2rem;
+            border-radius: 20px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+            width: 90%;
+            max-width: 600px;
+            transition: all 0.5s ease-in-out;
+            position: relative; /* Ensure card is on top of stickers and watermark */
+            z-index: 10;
+        }
+        /* Page styles - all pages are hidden by default */
+        .page {
+            display: none;
+            animation: fadeIn 0.7s ease-in-out;
+        }
+        /* The initial view with the button is the only one visible at first */
+        #initialView {
+            display: block;
+        }
+        /* Navigation button styles */
+        .nav-button {
+            margin-top: 2rem;
+            background-color: #ec4899;
+            color: white;
+            font-weight: bold;
+            padding: 0.75rem 1.5rem;
+            border-radius: 9999px;
+            box-shadow: 0 4px 15px rgba(236, 72, 153, 0.4);
+            transition: all 0.3s ease;
+            cursor: pointer;
+        }
+        .nav-button:hover {
+            background-color: #d946ef;
+            transform: translateY(-2px) scale(1.05);
+            box-shadow: 0 6px 20px rgba(217, 70, 239, 0.4);
+        }
+        /* List styles */
+        .custom-list {
+            text-align: left;
+            margin: 1.5rem auto 0;
+            max-width: 400px;
+        }
+        .custom-list li {
+            background-color: #fdf2f8;
+            padding: 0.75rem 1.25rem;
+            border-radius: 12px;
+            margin-bottom: 0.75rem;
+            font-weight: 500;
+            display: flex;
+            align-items: center;
+        }
+        .custom-list li .icon {
+            margin-right: 10px;
+            font-size: 1.2rem;
+        }
+        .list-item-appear {
+            opacity: 0;
+            transform: translateX(-20px);
+            animation: slideIn 0.5s forwards;
+        }
+        /* Other styles */
+        .sticker { position: absolute; font-size: 4rem; opacity: 0.8; user-select: none; z-index: 1; animation: float 6s ease-in-out infinite; }
+        .confetti { position: fixed; width: 10px; height: 10px; background-color: #f9a8d4; opacity: 0.9; border-radius: 50%; animation: fall 4s linear forwards; z-index: 20; }
+        .popper-confetti { position: fixed; width: 8px; height: 15px; opacity: 1; z-index: 1000; animation: shootUp var(--anim-duration) ease-out forwards; }
+        
+        @keyframes fadeIn { from { opacity: 0; transform: translateY(20px); } to { opacity: 1; transform: translateY(0); } }
+        @keyframes slideIn { to { opacity: 1; transform: translateX(0); } }
+        @keyframes fall { to { transform: translateY(110vh) rotate(720deg); opacity: 0; } }
+        @keyframes float { 0% { transform: translateY(0px); } 50% { transform: translateY(-20px); } 100% { transform: translateY(0px); } }
+        @keyframes shootUp { from { opacity: 1; transform: translate(0, 0) rotate(0deg); } to { opacity: 0; transform: translate(var(--end-x), var(--end-y)) rotate(720deg); } }
+        @media (max-width: 768px) { .sticker { font-size: 3rem; } .hide-mobile { display: none; } }
+    </style>
+</head>
+<body>
+
+    <audio id="background-audio" loop>
+        <source src="Yaaron Pal 128 Kbps.mp3" type="audio/mpeg">
+        Your browser does not support the audio element.
+    </audio>
+
+    <div class="watermark">Vipin</div>
+    <div class="sticker" style="top: 15%; left: 10%; transform: rotate(-15deg);">🎈</div>
+    <div class="sticker" style="top: 20%; right: 12%; transform: rotate(20deg); animation-delay: 3s;">🎂</div>
+    <div class="sticker hide-mobile" style="bottom: 15%; right: 15%; transform: rotate(-10deg);">🎁</div>
+    <div class="sticker" style="bottom: 25%; left: 8%; transform: rotate(15deg); animation-delay: 1.5s;">🎉</div>
+    <div class="sticker hide-mobile" style="top: 60%; left: 5%; transform: rotate(5deg); animation-delay: 4s;">💖</div>
+    <div class="sticker" style="top: 55%; right: 5%; transform: rotate(-5deg); animation-delay: 2s;">🥳</div>
+
+    <div class="card">
+        <div id="initialView">
+            <h1 class="font-pacifico text-4xl md:text-5xl text-pink-500">Hey Shreya Ji!</h1>
+            <p class="font-playfair text-gray-600 mt-4 text-lg">Ek double celebration ke liye, ek special surprise!</p>
+            <button id="revealButton" class="nav-button">Yahan Click Karein</button>
+        </div>
+
+        <div id="page-greeting" class="page">
+            <h1 class="font-pacifico text-4xl md:text-5xl text-pink-500">Happy Birthday & Happy Friendship Day!</h1>
+            <img src="https://images.unsplash.com/photo-1558025137-0b4081395d86?q=80&w=800" alt="Balloons and Friendship" class="w-full max-w-sm mx-auto rounded-lg shadow-md my-6" onerror="this.onerror=null;this.src='https://placehold.co/600x400/fdf2f8/ec4899?text=Happy+Celebrations!';">
+            <p class="mt-4 font-playfair text-gray-700 text-lg">With your birthday and Friendship Day both falling on August 3rd, it's a double celebration of you and our amazing bond!</p>
+            <p class="mt-4 text-2xl">🎂🧑‍🤝‍🧑💖</p>
+            <button onclick="nextPage('page-friendship')" class="nav-button">Aage dekhein...</button>
+        </div>
+        
+        <div id="page-friendship" class="page">
+            <h2 class="text-3xl font-bold text-gray-800 font-playfair">For My Dearest Friend</h2>
+            <p class="mt-4 font-playfair text-gray-700 text-lg">On this Friendship Day, I just want to say thank you. Thank you for being the amazing person you are, for all the support, and for making my world a better place just by being in it.</p>
+            <p class="mt-6 text-pink-500 font-semibold text-xl">Cheers to our friendship! 🥂</p>
+            <button onclick="nextPage('page-memories')" class="nav-button">Let's look back...</button>
+        </div>
+        
+        <div id="page-memories" class="page">
+            <h2 class="text-3xl font-bold text-gray-800 font-playfair">Memory Lane</h2>
+            <p class="mt-2 text-gray-600">Thinking back on some of our moments together.</p>
+            <ul class="custom-list">
+                <li class="list-item-appear" style="animation-delay: 0.2s;"><span class="icon">💬</span> The first time we had a really deep conversation.</li>
+                <li class="list-item-appear" style="animation-delay: 0.4s;"><span class="icon">😂</span> That one time we couldn't stop laughing about...</li>
+                <li class="list-item-appear" style="animation-delay: 0.6s;"><span class="icon">🤝</span> The day we realized we could count on each other.</li>
+                <li class="list-item-appear" style="animation-delay: 0.8s;"><span class="icon">🌟</span> Sharing our dreams and aspirations for the future.</li>
+            </ul>
+            <button onclick="nextPage('page-adventures')" class="nav-button">What I look forward to...</button>
+        </div>
+
+        <div id="page-adventures" class="page">
+            <h2 class="text-3xl font-bold text-gray-800 font-playfair">Things I Look Forward To</h2>
+            <p class="mt-2 text-gray-600">Can't wait for these simple moments with you.</p>
+            <ul class="custom-list">
+                <li class="list-item-appear" style="animation-delay: 0.2s;"><span class="icon">☕</span> A quiet evening with coffee and endless conversations.</li>
+                <li class="list-item-appear" style="animation-delay: 0.4s;"><span class="icon">🎶</span> Sharing our favorite books and music with each other.</li>
+                <li class="list-item-appear" style="animation-delay: 0.6s;"><span class="icon">😊</span> Just sitting together in comfortable silence.</li>
+                <li class="list-item-appear" style="animation-delay: 0.8s;"><span class="icon">🫂</span> Being each other's biggest support system, always.</li>
+            </ul>
+            <button onclick="nextPage('page-reasons')" class="nav-button">Why you're the best...</button>
+        </div>
+
+        <div id="page-reasons" class="page">
+            <h2 class="text-3xl font-bold text-gray-800 font-playfair">Why You're So Special</h2>
+            <ul class="custom-list">
+                <li class="list-item-appear" style="animation-delay: 0.2s;">Your understanding and support mean the world to me.</li>
+                <li class="list-item-appear" style="animation-delay: 0.4s;">You make even ordinary days feel special.</li>
+                <li class="list-item-appear" style="animation-delay: 0.6s;">I can be my truest self around you, without any filter.</li>
+                <li class="list-item-appear" style="animation-delay: 0.8s;">Your strength and kindness inspire me every day.</li>
+            </ul>
+            <button onclick="nextPage('page-promises')" class="nav-button">And some promises...</button>
+        </div>
+        
+        <div id="page-promises" class="page">
+            <h2 class="text-3xl font-bold text-gray-800 font-playfair">Kuch Vaade, Meri Dost</h2>
+            <ul class="custom-list">
+                <li class="list-item-appear" style="animation-delay: 0.2s;"><span class="icon">🤝</span> Promise to always be on your team, no matter what.</li>
+                <li class="list-item-appear" style="animation-delay: 0.4s;"><span class="icon">😂</span> Promise to always laugh at your silly jokes.</li>
+                <li class="list-item-appear" style="animation-delay: 0.6s;"><span class="icon">📞</span> Promise to always be just a call away.</li>
+                <li class="list-item-appear" style="animation-delay: 0.8s;"><span class="icon">😠</span> Promise to never let you stay angry for long!</li>
+            </ul>
+            <button onclick="nextPage('page-playlist')" class="nav-button">Our special playlist...</button>
+        </div>
+
+        <div id="page-playlist" class="page">
+            <h2 class="text-3xl font-bold text-gray-800 font-playfair">Our Special Playlist</h2>
+            <p class="mt-2 text-gray-600">A few songs for the double celebration!</p>
+            <ul class="custom-list">
+                <li class="list-item-appear" style="animation-delay: 0.2s;"><a href="https://www.youtube.com/watch?v=RbKjN7Vw3N0" target="_blank" class="flex items-center w-full"><span class="icon">🎉</span> "Abhi Toh Party Shuru Hui Hai" - Let's Celebrate!</a></li>
+                <li class="list-item-appear" style="animation-delay: 0.4s;"><a href="https://www.youtube.com/watch?v=k-GkY_G_eX4" target="_blank" class="flex items-center w-full"><span class="icon">🥳</span> "Birthday Bash" - A Party Just For You</a></li>
+                <li class="list-item-appear" style="animation-delay: 0.6s;"><a href="https://www.youtube.com/watch?v=EatzcaVJRms" target="_blank" class="flex items-center w-full"><span class="icon">🧑‍🤝‍🧑</span> "Tera Yaar Hoon Main" - A True Promise of Friendship</a></li>
+                <li class="list-item-appear" style="animation-delay: 0.8s;"><a href="https://www.youtube.com/watch?v=jBVjIL0Uxgg&pp=0gcJCfwAo7VqN5tD1" target="_blank" class="flex items-center w-full"><span class="icon">💖</span> "Yaaron" by KK - The Perfect Friendship Anthem</a></li>
+                <li class="list-item-appear" style="animation-delay: 1.0s;"><a href="https://www.youtube.com/watch?v=izw3K3S2a_4" target="_blank" class="flex items-center w-full"><span class="icon">✨</span> "Veere" - To Celebrate Our Bond</a></li>
+            </ul>
+            <button onclick="nextPage('page-final')" class="nav-button">One last thing...</button>
+        </div>
+
+        <div id="page-final" class="page">
+            <h1 class="font-pacifico text-4xl md:text-5xl text-pink-500">To My Unforgettable Friend</h1>
+            <p class="mt-4 font-playfair text-gray-700 text-lg">Distance means so little when someone means so much. Thank you for every laugh, every piece of advice, and for being my rock. Getting to celebrate your life and our friendship together is the best gift of all.</p>
+            <p class="mt-4 font-playfair text-gray-700 text-lg">Happy birthday and Happy Friendship Day, Shreya Ji! Here's to another year of your amazing self.</p>
+            <p class="mt-6 text-pink-500 font-semibold text-2xl">Love you always ❤️</p>
+            <p class="mt-8 text-gray-600 font-semibold text-lg">Your friend,<br>Vipin</p>
+        </div>
+    </div>
+
+    <script>
+        const revealButton = document.getElementById('revealButton');
+        const initialView = document.getElementById('initialView');
+        const pages = document.querySelectorAll('.page');
+        const colors = ['#f9a8d4', '#f472b6', '#ec4899', '#d946ef', '#a855f7', '#facc15'];
+
+        function showPage(pageId) {
+            pages.forEach(page => page.style.display = 'none');
+            const targetPage = document.getElementById(pageId);
+            if (targetPage) {
+                targetPage.style.display = 'block';
+                const listItems = targetPage.querySelectorAll('.list-item-appear');
+                listItems.forEach(item => {
+                    item.style.animation = 'none';
+                    item.offsetHeight;
+                    item.style.animation = null; 
+                });
+            }
+        }
+
+        function nextPage(pageId) {
+            triggerPopperEffect();
+            showPage(pageId);
+        }
+
+        revealButton.addEventListener('click', () => {
+            // Start the background music on the first click
+            document.getElementById('background-audio').play();
+
+            // Continue with existing actions
+            initialView.style.display = 'none';
+            showPage('page-greeting');
+            createConfetti();
+        });
+
+        function createConfetti() {
+            for (let i = 0; i < 200; i++) {
+                const confetti = document.createElement('div');
+                confetti.classList.add('confetti');
+                confetti.style.backgroundColor = colors[Math.floor(Math.random() * colors.length)];
+                confetti.style.width = `${Math.random() * 12 + 5}px`;
+                confetti.style.height = confetti.style.width;
+                confetti.style.left = `${Math.random() * 100}vw`;
+                confetti.style.animationDelay = `${Math.random() * 2}s`;
+                document.body.appendChild(confetti);
+                setTimeout(() => confetti.remove(), 4000);
+            }
+        }
+
+        function triggerPopperEffect() {
+            for (let i = 0; i < 40; i++) {
+                createPopperParticle('left');
+                createPopperParticle('right');
+            }
+        }
+
+        function createPopperParticle(side) {
+            const particle = document.createElement('div');
+            particle.classList.add('popper-confetti');
+            const animDuration = Math.random() * 1.5 + 1;
+            const endY = -(Math.random() * 50 + 40);
+            let endX;
+
+            if (side === 'left') {
+                particle.style.left = '5vw';
+                endX = Math.random() * 45;
+            } else {
+                particle.style.right = '5vw';
+                endX = -Math.random() * 45;
+            }
+
+            particle.style.backgroundColor = colors[Math.floor(Math.random() * colors.length)];
+            particle.style.setProperty('--end-x', `${endX}vw`);
+            particle.style.setProperty('--end-y', `${endY}vh`);
+            particle.style.setProperty('--anim-duration', `${animDuration}s`);
+            document.body.appendChild(particle);
+            setTimeout(() => particle.remove(), animDuration * 1000);
+        }
+    </script>
+</body>
+</html>
